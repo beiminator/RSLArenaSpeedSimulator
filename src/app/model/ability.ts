@@ -1,24 +1,35 @@
-import { ABILITY_TYPES, PRIORITY_TYPES } from './manipulations';
+import { ABILITY_EFFECTS, ABILITY_EFFECT_TARGET, PRIORITY_TYPES } from './manipulations';
+import { AbilityEffect } from './ability-effect';
 
 export class Ability {
     name : String;
-    type : ABILITY_TYPES;
-    subType : any;
-    value : number;
+    effects: AbilityEffect[];
     priority : PRIORITY_TYPES;
     cooldown : number;
     private internalCooldown : number;
 
     constructor() {
         this.name = "";
-        this.type = ABILITY_TYPES.STANDARD;
-        this.subType = false;
-        this.value = 0;
+        this.effects = [];
         this.priority = PRIORITY_TYPES.LOWER;
-        this.cooldown = 0; // default for basic ability
+        this.cooldown = 0; // default for basic aility
         this.internalCooldown = 0;
     }
+    addEffect(
+        type: ABILITY_EFFECTS, 
+        subType : any, 
+        value : number, 
+        target: ABILITY_EFFECT_TARGET = ABILITY_EFFECT_TARGET.NONE) 
+        {
+        let effect = new AbilityEffect();
+        effect.type = type;
+        effect.subType = subType;
+        effect.value = value;
+        effect.target = target;
 
+        this.effects.push(effect);
+        return this;
+    }
     increaseCoolDown(qnt: number) {
         this.internalCooldown += qnt;
     }

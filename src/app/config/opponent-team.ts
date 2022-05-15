@@ -1,34 +1,23 @@
 import { Champion } from "../model/champion";
-import { ABILITY_TYPES, PRIORITY_TYPES, TM_MANIPULATION_TYPES } from "../model/manipulations";
-import { Team } from "../model/team";
+import { ABILITY_EFFECTS, ABILITY_EFFECT_TARGET, PRIORITY_TYPES, TM_MANIPULATION_TYPES } from "../model/manipulations";
 import { TeamCommons } from "./team-common";
 
 export class OpponentTeam extends TeamCommons {
 
     init() {
-        this.team.addChampion(new Champion(
+        let champ = new Champion(
             'Arbiter',
             110,
             320)
-            .addAuraSpeed(30)
-            .addAbility(
-                'A1',
-                ABILITY_TYPES.STANDARD,
-                undefined,
-                0)
-            .addAbility(
-                'ress',
-                ABILITY_TYPES.STANDARD,
-                undefined,
-                0,
-                5,
-                PRIORITY_TYPES.MIDIUM)
-            .addAbility(
-                'Attack-Up',
-                ABILITY_TYPES.TM_MANIPULATION,
-                TM_MANIPULATION_TYPES.GAIN_ALL,
+            .addAuraSpeed(30);
+        champ.addAbility('A1',0,0);
+        champ.addAbility('ress',5,PRIORITY_TYPES.MIDIUM);
+        champ.addAbility('TM-BOOST',3,PRIORITY_TYPES.HIGH)
+            .addEffect(
+                ABILITY_EFFECTS.TM_MANIPULATION, 
+                TM_MANIPULATION_TYPES.GAIN,
                 30,
-                3,
-                PRIORITY_TYPES.HIGH));
+                ABILITY_EFFECT_TARGET.PLAYER_TEAM);
+        this.team.addChampion(champ);
     }
 }

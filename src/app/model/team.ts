@@ -1,5 +1,5 @@
 import { Champion } from "./champion";
-import { ABILITY_TYPES } from "./manipulations";
+import { ABILITY_EFFECTS } from "./manipulations";
 
 export class Team {
     members: Champion [];
@@ -13,10 +13,10 @@ export class Team {
     }
 
     private getLeaderAuraSpeed() {
-        let auraSpeed = this.members[0].abilities.find(ability => ability.type === ABILITY_TYPES.AURA_SPEED);
+        let auraSpeed = this.members[0].abilities.find(ability => typeof ability.effects.find( eff => eff.type === ABILITY_EFFECTS.AURA_SPEED) !== 'undefined');
         let ret = undefined;
         if (!!auraSpeed) {
-            ret = auraSpeed.value;
+            ret = auraSpeed.effects[0].value;
         }
 
         return ret;
