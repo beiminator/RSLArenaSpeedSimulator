@@ -1,0 +1,31 @@
+export enum ABILITY_TYPES {
+    STANDARD = 'STANDARD',
+    CROWD_CONTROL = 'CROWD_CONTROL',
+    TM_MANIPULATION = 'TM_MANIPULATION',
+    SPEED_MANIPULATION = 'SPEED_MANIPULATION',
+    AURA_SPEED = 'AURA_SPEED'
+}
+export enum TM_MANIPULATION_TYPES {
+    GAIN_ALL,
+    GAIN_SELF,
+    REMOVE_ALL,
+    ERMOVE_SELF,
+}
+
+export enum SPEED_MANIPULATION_TYPES {
+    ADD,
+    remove,
+}
+
+export enum CROWD_CONTROL_TYPES {
+    SLEEP,
+    FREEZE,
+    STUN
+}
+
+export enum PRIORITY_TYPES {
+    LOWER,
+    MIDIUM,
+    HIGH,
+    MAX
+}
