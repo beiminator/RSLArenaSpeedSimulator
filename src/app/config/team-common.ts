@@ -12,6 +12,11 @@ export class TeamCommons {
             this.team.members[champ].generateTurnMeter();
         }
     }
+    giveTurnMeter(amount: number) {
+        for(let champ in this.team.members) {
+            this.team.members[champ].increaseTurnMeter(amount);
+        }
+    }
     getMembers() : Champion[] {
         return this.team.members;
     }

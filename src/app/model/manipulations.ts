@@ -1,4 +1,4 @@
-export enum ABILITY_EFFECTS {
+export enum SKILL_EFFECTS {
     NONE = 'NONE',
     CROWD_CONTROL = 'CROWD_CONTROL',
     TM_MANIPULATION = 'TM_MANIPULATION',
@@ -6,7 +6,7 @@ export enum ABILITY_EFFECTS {
     SPEED_MANIPULATION = 'SPEED_MANIPULATION',
     AURA_SPEED = 'AURA_SPEED'
 }
-export enum ABILITY_EFFECT_TARGET {
+export enum SKILL_EFFECT_TARGET {
     PLAYER_TEAM = 'PLAYER_TEAM',
     OPPONENT_TEAM = 'OPPONENT_TEAM',
     SELF = 'SELF',
@@ -14,19 +14,19 @@ export enum ABILITY_EFFECT_TARGET {
     NONE = 'NONE',
 }
 export enum TM_MANIPULATION_TYPES {
-    GAIN,
-    REMOVE
+    GAIN = 'GAIN',
+    REMOVE = 'REMOVE'
 }
 
 export enum SPEED_MANIPULATION_TYPES {
-    ADD,
-    remove,
+    ADD = 'ADD',
+    REMOVE = 'REMOVE',
 }
 
 export enum CROWD_CONTROL_TYPES {
-    SLEEP,
-    FREEZE,
-    STUN
+    SLEEP = 'SLEEP',
+    FREEZE = 'FREEZE',
+    STUN = 'STUN'
 }
 
 export enum PRIORITY_TYPES {
