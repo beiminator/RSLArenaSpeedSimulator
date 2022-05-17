@@ -73,26 +73,33 @@ export class GameService {
         let champTakingTurn = sortedFullTMList[0];
         do {
             this.startTurn(champTakingTurn);
-            let usedSkill = champTakingTurn.useSkill();
-            if(!!usedSkill) {
-                /**
-                 * the used Skill is handled here because involve 
-                 * player team or opponent team or both
-                 */
-    
-                this.applyEffects(champTakingTurn, usedSkill);
+            if (!champTakingTurn.willSkipTurn) {
+                let usedSkill = champTakingTurn.useSkill();
+                if(!!usedSkill) {
+                    /**
+                     * the used Skill is handled here because involve 
+                     * player team or opponent team or both
+                     */
+        
+                    this.applyEffects(champTakingTurn, usedSkill);
+                }
             }
-            this.closeTurn(champTakingTurn);
+            this.endTurn(champTakingTurn);
         } while (champTakingTurn.needExtraTurn);
     }
     private startTurn(champ : Champion) {
-        console.log(`${champ.name} is taking a turn`);
         champ.needExtraTurn = false;
         champ.resetTurnMeter();
-        champ.decreaseSkillsCooldown();
+        champ.checkSkipTurn();
+        if (!champ.willSkipTurn) {
+            console.log(`${champ.name} is taking a turn`);
+            champ.decreaseSkillsCooldown();
+        } else {
+            console.log(`${champ.name} is skipping the turn!`);
+        }
         this.printChamps([...this.playerTeam.getMembers(),...this.opponentTeam.getMembers()]);
     }
-    private closeTurn(champ : Champion) {
+    private endTurn(champ : Champion) {
         console.log(`closing turn for ${champ.name}`);
         champ.decreaseStatusDuration();
         this.printChamps([...this.playerTeam.getMembers(),...this.opponentTeam.getMembers()]);
@@ -120,14 +127,8 @@ export class GameService {
                 this.applyStatus(source, effects[i], applyToPlayerTeam);
             } else {
                 switch (effects[i].type) {
-                    case SKILL_EFFECTS.CROWD_CONTROL:
-                        this.handleCrowdControlEffect(effects[i], applyToPlayerTeam);
-                        break;
                     case SKILL_EFFECTS.TM_MANIPULATION:
                         this.handleTNManipulationEffect(effects[i], applyToPlayerTeam);
-                        break;
-                    case SKILL_EFFECTS.EXTRA_TURN:
-                        source.needExtraTurn = true;
                         break;
                     default:
                         console.log("effect not recognized",effects[i]);
@@ -137,19 +138,6 @@ export class GameService {
         }
     }
 
-    private handleCrowdControlEffect(effect : SkillEffect, isPlayerTeam: boolean) {
-        switch(effect.subType) {
-            case CROWD_CONTROL_TYPES.SLEEP:
-                break;
-            case CROWD_CONTROL_TYPES.FREEZE:
-                break;
-            case CROWD_CONTROL_TYPES.STUN:
-                break;
-            default:
-                console.log("CrowdControl not recognized" ,effect);
-                break;
-        }
-    }
     private applyStatus (source: Champion, effect: SkillEffect, isPlayerTeam: boolean) {
         if (isPlayerTeam) {
             this.playerTeam.getMembers().forEach(champ => champ.applyStatus(source, effect));

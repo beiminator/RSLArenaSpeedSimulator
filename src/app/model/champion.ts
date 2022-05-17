@@ -16,6 +16,7 @@ export class Champion {
     statusBar : ChampStatus[] = [];
     isPlayerTeam : boolean = false;
     needExtraTurn : boolean = false;
+    willSkipTurn : boolean = false;
 
     constructor(name: string, baseSpeed: number, displayedSpeed : number) {
         this.name = name;
@@ -138,5 +139,9 @@ export class Champion {
                 }
         }
         return used;
+    }
+    checkSkipTurn() {
+        let cc = this.statusBar.filter(effect=>effect.type === SKILL_EFFECTS.CROWD_CONTROL);
+        this.willSkipTurn = cc.length > 0;
     }
 }
